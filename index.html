@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>EMTP 考古題練習</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">EMTP 題庫</p>
+          <h1>考古題練習</h1>
+        </div>
+        <div class="topbar-stats" aria-label="題庫統計">
+          <span><strong id="totalQuestionCount">0</strong> 題</span>
+          <span><strong id="totalChapterCount">0</strong> 章</span>
+        </div>
+      </header>
+
+      <section class="setup-grid" id="setupView">
+        <div class="control-panel">
+          <div class="panel-header">
+            <h2>練習設定</h2>
+            <button class="icon-button" id="resetSettingsButton" type="button" title="重設設定" aria-label="重設設定">↺</button>
+          </div>
+
+          <label class="field">
+            <span>題數</span>
+            <input id="questionCountInput" type="number" min="1" step="1" value="20">
+          </label>
+          <input id="questionCountRange" class="range" type="range" min="1" max="100" value="20">
+          <p class="available-line"><span id="availableCount">0</span> 題可選</p>
+
+          <div class="field">
+            <span>出題方式</span>
+            <div class="segmented" role="group" aria-label="出題方式">
+              <button type="button" class="segment is-active" data-mode="random">隨機</button>
+              <button type="button" class="segment" data-mode="ordered">依年份</button>
+            </div>
+          </div>
+
+          <label class="field">
+            <span>題目關鍵字</span>
+            <input id="keywordInput" type="search" placeholder="例：休克、ECG、災難">
+          </label>
+
+          <div class="actions">
+            <button class="primary-button" id="startButton" type="button">
+              <span>▶</span>
+              開始練習
+            </button>
+            <button class="ghost-button" id="randomPickButton" type="button">
+              <span>✦</span>
+              隨機選章
+            </button>
+          </div>
+        </div>
+
+        <div class="chapter-panel">
+          <div class="panel-header">
+            <h2>章節</h2>
+            <div class="header-actions">
+              <button class="text-button" id="selectAllChaptersButton" type="button">全選</button>
+              <button class="text-button" id="clearChaptersButton" type="button">清空</button>
+            </div>
+          </div>
+          <label class="search-field">
+            <span>⌕</span>
+            <input id="chapterSearchInput" type="search" placeholder="搜尋章節">
+          </label>
+          <div class="chapter-list" id="chapterList"></div>
+        </div>
+      </section>
+
+      <section class="practice-view is-hidden" id="practiceView">
+        <aside class="practice-sidebar">
+          <div class="score-box is-hidden" id="scoreBox">
+            <p class="eyebrow">本次成績</p>
+            <strong id="scoreText">0 / 0</strong>
+            <span id="scorePercent">0%</span>
+          </div>
+          <div class="progress-box">
+            <p class="eyebrow">作答進度</p>
+            <strong><span id="answeredCount">0</span> / <span id="quizCount">0</span></strong>
+            <div class="progress-track">
+              <div id="progressBar" class="progress-bar"></div>
+            </div>
+          </div>
+          <div class="sidebar-actions">
+            <button class="text-button" id="backToSetupButton" type="button">回設定</button>
+          </div>
+        </aside>
+
+        <div class="question-area">
+          <div class="question-column" id="questionColumn"></div>
+          <div class="practice-actions" aria-label="練習操作">
+            <button class="primary-button" id="gradeButton" type="button">評分</button>
+            <button class="ghost-button is-hidden" id="retryWrongButton" type="button">錯題重練</button>
+            <button class="ghost-button" id="newQuizButton" type="button">重新出題</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <template id="chapterTemplate">
+      <label class="chapter-row">
+        <input type="checkbox">
+        <span class="chapter-number"></span>
+        <span class="chapter-title"></span>
+        <span class="chapter-count"></span>
+      </label>
+    </template>
+
+    <template id="questionTemplate">
+      <article class="question-card">
+        <div class="question-meta"></div>
+        <h3></h3>
+        <div class="options"></div>
+        <div class="correction is-hidden"></div>
+      </article>
+    </template>
+
+    <script src="./data/questions.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
